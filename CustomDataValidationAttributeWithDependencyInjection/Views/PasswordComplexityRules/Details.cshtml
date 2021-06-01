@@ -1,0 +1,44 @@
+﻿@model DataModel.PasswordComplexityRuleDataModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+<form method="post" action="Save">
+
+
+    <div>
+        <h4>PasswordComplexityRule</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.MustContainLettersNumbers)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.MustContainLettersNumbers)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.MustContainSpecialCharacters)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.MustContainSpecialCharacters)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.MustContainUpperLower)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.MustContainUpperLower)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.MinLength)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.MinLength)
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <input type="submit" value="Save" />
+    </div>
+</form>
