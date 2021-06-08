@@ -8,10 +8,10 @@ using System.Text;
 
 namespace DataRepository.DataRepositoryEntities.DataRepoistoryEntityOperationsClasses
 {
-    class UserOperationIClass : UserOperationInterface
+   public class UserOperationClass : UserOperationInterface
     {
         IContextGateWay _contextGateWay;
-        public UserOperationIClass(IContextGateWay contextGateWay)
+        public UserOperationClass(IContextGateWay contextGateWay)
         {
             _contextGateWay = contextGateWay;
 

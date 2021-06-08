@@ -8,7 +8,7 @@ using System.Text;
 
 namespace DataRepository.DataRepositoryEntities.DataRepoistoryEntityOperationsClasses
 {
-    class PasswordComplexityRuleOperationsClass : PasswordComplexityRuleOperationInterface
+    public class PasswordComplexityRuleOperationsClass : PasswordComplexityRuleOperationInterface
     {
         IContextGateWay _contextGateWay;
         public PasswordComplexityRuleOperationsClass(IContextGateWay contextGateWay)
@@ -65,7 +65,8 @@ namespace DataRepository.DataRepositoryEntities.DataRepoistoryEntityOperationsCl
                         MinLength = PasswordComplexityRuleDataModel.MinLength,
                         MustContainLettersNumbers = PasswordComplexityRuleDataModel.MustContainLettersNumbers,
                         MustContainSpecialCharacters = PasswordComplexityRuleDataModel.MustContainSpecialCharacters,
-                    };
+                        MustContainUpperLower = PasswordComplexityRuleDataModel.MustContainUpperLower
+            };
                 _contextGateWay.PasswordComplexityRules.Edit(PasswordComplexityRule, PasswordComplexityRule1);
             }
             else
@@ -76,6 +77,7 @@ namespace DataRepository.DataRepositoryEntities.DataRepoistoryEntityOperationsCl
                     MinLength = PasswordComplexityRuleDataModel.MinLength,
                     MustContainLettersNumbers = PasswordComplexityRuleDataModel.MustContainLettersNumbers,
                     MustContainSpecialCharacters = PasswordComplexityRuleDataModel.MustContainSpecialCharacters,
+                   MustContainUpperLower = PasswordComplexityRuleDataModel.MustContainUpperLower
                 });
             }
         }

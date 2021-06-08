@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using DataModel;
 using DataRepository.GateWay;
 using ServiceClassLibrary;
+using CustomDataValidationAttributeWithDependencyInjection.Models;
+using ServiceClassLibrary.Interface;
 
 namespace CustomDataValidationAttributeWithDependencyInjection.Controllers
 {
@@ -39,14 +41,23 @@ namespace CustomDataValidationAttributeWithDependencyInjection.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Save(UserDataModel user)
+        public IActionResult Save(UserViewModel user)
         {
-            if (ModelState.IsValid)
+            if(!ModelState.IsValid)
             {
-                _userServiceInterface.SaveUser(user);
-                return RedirectToAction(nameof(Index));
+                return View("Create",user);
             }
-            return View(user);
+            UserDataModel userDataModel = new UserDataModel();
+            userDataModel.FirstName = user.FirstName;
+            userDataModel.LastName = user.LastName;
+            userDataModel.Password = user.Password;
+            userDataModel.UserName = user.UserName;
+            userDataModel.Id = user.Id;
+
+            _userServiceInterface.SaveUser(userDataModel);
+                return RedirectToAction(nameof(Index));
+            
+           
         }
 
         // GET: Users/Edit/5
@@ -58,11 +69,18 @@ namespace CustomDataValidationAttributeWithDependencyInjection.Controllers
             }
 
             var user = _userServiceInterface.GetUser((int)id);
+            UserViewModel userViewModel   = new UserViewModel();
+            userViewModel.FirstName = user.FirstName;
+            userViewModel.LastName = user.LastName;
+            userViewModel.Password = user.Password;
+            ViewBag.Password = user.Password;
+            userViewModel.UserName = user.UserName;
+            userViewModel.Id = user.Id;
             if (user == null)
             {
                 return NotFound();
             }
-            return View(user);
+            return View(userViewModel);
         }
 
         // POST: Users/Edit/5
@@ -70,30 +88,24 @@ namespace CustomDataValidationAttributeWithDependencyInjection.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public  IActionResult Edit(UserDataModel user)
+        public  IActionResult Edit(UserViewModel user)
         {
-            
 
-            if (ModelState.IsValid)
+
+            if (!ModelState.IsValid)
             {
-                try
-                {
-                    _userServiceInterface.SaveUser(user);
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserExists(user.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                ViewBag.Password = user.Password;
+                return View(user);
             }
-            return View(user);
+            UserDataModel userDataModel = new UserDataModel();
+            userDataModel.FirstName = user.FirstName;
+            userDataModel.LastName = user.LastName;
+            userDataModel.Password = user.Password;
+            userDataModel.UserName = user.UserName;
+            userDataModel.Id = user.Id;
+
+            _userServiceInterface.SaveUser(userDataModel);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Users/Delete/5

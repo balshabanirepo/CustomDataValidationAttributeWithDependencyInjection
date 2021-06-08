@@ -2,7 +2,44 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <div>
+        <p>
+            Data annotation is a server side mechanism that is used to validate a certain model attribute value in MVC.It binds a model attribute to a certain validation attribute type
+            .Common validation attribute types include
+            <ul>
+                <li>Required</li>
+                <li>Range</li>
+                <li>DataType</li>
+                <li>Regular expression</li>
+                <li>....</li>
+            </ul>
+            <h3>
+                Regular expression data annotation is used to validate a model attribute value against a certain pattern,as example below
+            </h3>
+        <p>The following data annotation checks if a model attribute value qualifies to be a valid e-mail address</p>
+        [RegularExpression("^\w+([-+.']\w+)*\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "Email is not valid.")]
+        <p>The model attributes are bound to the proper data annotation while creating the model</p>
+        <></>
+        <h2>What if the pattern is subject to change as per user requirements</h2>
+        <h2>for example user can control the complexity degree of user passwords</h2>
+<pre>
+	 public partial class PasswordComplexityRuleDataModel
+    {
+        public int Id { get; set; }
+        public bool MustContainLettersNumbers { get; set; }
+        public bool MustContainSpecialCharacters { get; set; }
+        public bool MustContainUpperLower { get; set; }
+        public short MinLength { get; set; }
+       
+    }
+</pre>
+        <h4>Solution </h4>
+        <ul>
+            <li>
+                Create a custom validation attribute to take care of validating the input
+            </li>
+        </ul>
+        <h4>This project demonstrates this solution </h4>
+       
+        <!-------------------------------    That's it!   --------------------------->
+    </div>

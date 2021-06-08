@@ -9,14 +9,17 @@ using DataRepository.DataRepositoryEntities;
 using DataRepository.GateWay;
 using ServiceClassLibrary;
 using DataModel;
+using CustomDataValidationAttributeWithDependencyInjection.Models;
+using DataRepository.DataRepositoryEntities.DataRepoistoryEntityOperationsInterface;
+using ServiceClassLibrary.Interface;
 
 namespace CustomDataValidationAttributeWithDependencyInjection.Controllers
 {
     public class PasswordComplexityRulesController : Controller
     {
-        private readonly IPasswordComplexityRulesServiceInterface _passwordComplexityRulesService;
+        private readonly PasswordComplexityRulesServiceInterface _passwordComplexityRulesService;
 
-        public PasswordComplexityRulesController(IPasswordComplexityRulesServiceInterface passwordComplexityRulesService)
+        public PasswordComplexityRulesController(PasswordComplexityRulesServiceInterface passwordComplexityRulesService)
         {
             _passwordComplexityRulesService = passwordComplexityRulesService;
         }
@@ -30,9 +33,13 @@ namespace CustomDataValidationAttributeWithDependencyInjection.Controllers
          
            
             var passwordComplexityRule = _passwordComplexityRulesService.GetPasswordComplexityRules();
-           
-
-            return View(passwordComplexityRule);
+            PasswordComplexityRuleViewModel complexityRuleViewModel= new PasswordComplexityRuleViewModel();
+            complexityRuleViewModel.MinLength = passwordComplexityRule.MinLength;
+            complexityRuleViewModel.MustContainLettersNumbers = passwordComplexityRule.MustContainLettersNumbers;
+            complexityRuleViewModel.MustContainUpperLower = passwordComplexityRule.MustContainUpperLower;
+            complexityRuleViewModel.MustContainSpecialCharacters = passwordComplexityRule.MustContainSpecialCharacters;
+            complexityRuleViewModel.Id = passwordComplexityRule.Id;
+            return View(complexityRuleViewModel);
         }
 
       
@@ -41,15 +48,20 @@ namespace CustomDataValidationAttributeWithDependencyInjection.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Save(PasswordComplexityRuleDataModel passwordComplexityRule)
+        public IActionResult Save(PasswordComplexityRuleViewModel passwordComplexityRule)
         {
             if (ModelState.IsValid)
             {
-                
-                _passwordComplexityRulesService.SavePasswordComplexityRules(passwordComplexityRule);
-                return RedirectToAction(nameof(Index));
+                PasswordComplexityRuleDataModel complexityRuleDataModel = new PasswordComplexityRuleDataModel();
+                complexityRuleDataModel.MinLength = passwordComplexityRule.MinLength;
+                complexityRuleDataModel.MustContainLettersNumbers = passwordComplexityRule.MustContainLettersNumbers;
+                complexityRuleDataModel.MustContainUpperLower = passwordComplexityRule.MustContainUpperLower;
+                complexityRuleDataModel.MustContainSpecialCharacters = passwordComplexityRule.MustContainSpecialCharacters;
+                complexityRuleDataModel.Id = passwordComplexityRule.Id;
+                _passwordComplexityRulesService.SavePasswordComplexityRules(complexityRuleDataModel);
+                ViewBag.SavedSuccessfully = "Saved Successfully";
             }
-            return View(passwordComplexityRule);
+            return View("Details",passwordComplexityRule);
         }
 
         // GET: PasswordComplexityRules/Edit/5

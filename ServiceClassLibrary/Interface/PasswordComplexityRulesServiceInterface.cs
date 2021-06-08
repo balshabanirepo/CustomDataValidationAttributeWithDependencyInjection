@@ -3,16 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ServiceClassLibrary
+ namespace ServiceClassLibrary.Interface
 {
-    public interface IPasswordComplexityRulesServiceInterface
+    public interface PasswordComplexityRulesServiceInterface
     {
         public void Delete();
 
         public void SavePasswordComplexityRules(PasswordComplexityRuleDataModel PasswordComplexityRules);
 
         public PasswordComplexityRuleDataModel GetPasswordComplexityRules();
-
-      
     }
 }

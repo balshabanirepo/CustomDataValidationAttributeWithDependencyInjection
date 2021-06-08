@@ -1,23 +1,23 @@
 ﻿using DataModel;
 using DataRepository.DataRepositoryEntities.DataRepoistoryEntityOperationsInterface;
+using ServiceClassLibrary.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace ServiceClassLibrary
 {
-    public class PasswordComplexityRulesServiceClass : IPasswordComplexityRulesServiceInterface
+    public class PasswordComplexityRulesServiceClass: PasswordComplexityRulesServiceInterface
     {
-        //private PasswordComplexityRulesModelMapper settingsModelMapper;
         private readonly PasswordComplexityRuleOperationInterface _PasswordComplexityRulesOperations;
-       
+
 
 
         public PasswordComplexityRulesServiceClass(PasswordComplexityRuleOperationInterface PasswordComplexityRulesOperations)
         {
-           // settingsModelMapper = new PasswordComplexityRulesModelMapper();
+            // settingsModelMapper = new PasswordComplexityRulesModelMapper();
 
-                _PasswordComplexityRulesOperations=PasswordComplexityRulesOperations;
+            _PasswordComplexityRulesOperations = PasswordComplexityRulesOperations;
         }
         public void SavePasswordComplexityRules(PasswordComplexityRuleDataModel PasswordComplexityRules)
         {
@@ -67,15 +67,13 @@ namespace ServiceClassLibrary
 
 
             }
-            
 
 
-            
 
-          
+
+
+
 
         }
-
-      
     }
 }

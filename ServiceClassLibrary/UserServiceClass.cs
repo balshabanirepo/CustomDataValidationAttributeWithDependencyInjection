@@ -1,37 +1,48 @@
 ﻿using DataModel;
-
+using DataRepository.DataRepositoryEntities.DataRepoistoryEntityOperationsInterface;
+using ServiceClassLibrary.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using DataRepository;
-using DataRepository.DataRepositoryEntities.DataRepoistoryEntityOperationsInterface;
 
 namespace ServiceClassLibrary
 {
-    class UserServiceClass : UserServiceInterface
+    public class UserServiceClass: UserServiceInterface
     {
-        private readonly UserOperationInterface _PasswordComplexityRulesOperations;
-        public void Delete(int id)
-        {
-            _PasswordComplexityRulesOperations.Delete(id);
-        }
-         
-        public UserDataModel GetUser(int id)
-        {
-          return  _PasswordComplexityRulesOperations.GetById(id);
-
-        }
-
-        public void SaveUser(UserDataModel User)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<UserDataModel> list()
-        {
-            return _PasswordComplexityRulesOperations.list();
-        }
 
        
+            private readonly UserOperationInterface _userOperationInterface;
+
+        public UserServiceClass(UserOperationInterface userOperationInterface)
+        {
+            // settingsModelMapper = new PasswordComplexityRulesModelMapper();
+
+            _userOperationInterface = userOperationInterface;
+        }
+        public void Delete(int id)
+            {
+            _userOperationInterface.Delete(id);
+            }
+
+            public UserDataModel GetUser(int id)
+            {
+                return _userOperationInterface.GetById(id);
+
+            }
+
+            public void SaveUser(UserDataModel User)
+            {
+            _userOperationInterface.SaveUser(User);
+            }
+
+            public List<UserDataModel> list()
+            {
+                return _userOperationInterface.list();
+            }
+
+
+        
     }
 }
+
+
